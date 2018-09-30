@@ -451,8 +451,8 @@ public class SoLoader {
     }
   }
 
-  public static boolean loadLibrary(String shortName) {
-    return loadLibrary(shortName, 0);
+  public static void loadLibrary(String shortName) {
+    loadLibrary(shortName, 0);
   }
 
   /**
@@ -464,7 +464,7 @@ public class SoLoader {
    * @return Whether the library was loaded as a result of this call (true), or was already loaded
    *     through a previous call to SoLoader (false).
    */
-  public static boolean loadLibrary(String shortName, int loadFlags) throws UnsatisfiedLinkError {
+  public static void loadLibrary(String shortName, int loadFlags) throws UnsatisfiedLinkError {
     sSoSourcesLock.readLock().lock();
     try {
       if (sSoSources == null) {
@@ -485,7 +485,7 @@ public class SoLoader {
                 System.loadLibrary(shortName);
               }
             }
-            return needsLoad;
+            return;
           }
         }
       }
@@ -497,7 +497,7 @@ public class SoLoader {
 
     String soName = mergedLibName != null ? mergedLibName : shortName;
 
-    return loadLibraryBySoName(
+    loadLibraryBySoName(
         System.mapLibraryName(soName), shortName, mergedLibName, loadFlags, null);
   }
 
